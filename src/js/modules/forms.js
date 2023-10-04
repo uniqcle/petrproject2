@@ -1,3 +1,5 @@
+import { postData } from '../services/requests';
+
 const sendForms = () => {
     const forms = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
@@ -13,8 +15,8 @@ const sendForms = () => {
     };
 
     const path = {
-        designer: 'assets/server.php',
-        question: 'assets/question.php'
+        designer: 'server.php',
+        question: 'question.php'
     };
 
     const clearInputs = () => {
@@ -25,6 +27,19 @@ const sendForms = () => {
             upload.previousElementSibling.textContent = 'Файл не выбран'
         })
     }
+
+
+    uploads.forEach(item => {
+        item.addEventListener('input', () => {
+            console.log(item.files[0]);
+            let dots;
+            const arr = item.files[0].name.split('.');
+
+            arr[0].length > 6 ? dots = "..." : dots = '.';
+            const name = arr[0].substring(0, 6) + dots + arr[1];
+            item.previousElementSibling.textContent = name;
+        });
+    });
 
 
     forms.forEach(form => {
@@ -55,7 +70,24 @@ const sendForms = () => {
             let api;
             api = form.closest('.popup-design') || form.classList.contains('calc_form') ? path.designer : path.question;
 
-            console.log(api)
+            postData(api, formData)
+                .then(res => {
+                    statusImg.setAttribute('src', message.ok);
+                    textMessage.textContent = message.success;
+                })
+                .catch((e) => {
+                    statusImg.setAttribute('src', message.fail);
+                    textMessage.textContent = message.failure;
+                })
+                .finally(() => {
+                    clearInputs();
+                    setTimeout(() => {
+                        statusMessage.remove();
+                        form.style.display = 'block';
+                        form.classList.remove('fadeOutUp');
+                        form.classList.add('fadeInUp');
+                    }, 5000);
+                })
 
 
         })
