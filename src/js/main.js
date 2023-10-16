@@ -10,5 +10,5 @@ window.addEventListener('DOMContentLoaded', () => {
     sliders('.main-slider-item', 'vertical')
     sliders('.feedback-slider-item', 'horizontical', '.main-prev-btn', '.main-next-btn');
     sendForms();
-    showMoreStyles('.button-styles', '.styles-2')
+    showMoreStyles('.button-styles', '#styles .row')
 })
