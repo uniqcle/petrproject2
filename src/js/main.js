@@ -2,6 +2,7 @@ import modals from './modules/modals';
 import sliders from './modules/sliders';
 import sendForms from './modules/forms';
 import showMoreStyles from './modules/showMoreStyles';
+import calc from './modules/calc'
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict'
@@ -11,4 +12,5 @@ window.addEventListener('DOMContentLoaded', () => {
     sliders('.feedback-slider-item', 'horizontical', '.main-prev-btn', '.main-next-btn');
     sendForms();
     showMoreStyles('.button-styles', '#styles .row')
+    calc('#size', '#material', '#options', '.promocode', '.calc-price')
 })
